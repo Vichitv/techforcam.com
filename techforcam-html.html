@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology for Cambodia | techforcam.com</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0B1221;
+    --bg2: #0F1B2D;
+    --teal: #00B4D8;
+    --teal-glow: rgba(0,180,216,0.12);
+    --teal-border: rgba(0,180,216,0.12);
+    --text: #E2E8F0;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --white: #F1F5F9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(20px, 5vw, 60px); height: 68px;
+    background: rgba(11,18,33,0.85); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--teal-border);
+  }
+  .nav-logo {
+    font-size: 20px; font-weight: 900; color: var(--teal);
+    text-decoration: none; letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--text-muted);
+    text-decoration: none; transition: color 0.2s; position: relative;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a.cta-link {
+    background: var(--teal); color: var(--bg); padding: 8px 20px;
+    border-radius: 6px; font-weight: 700;
+  }
+  .nav-links a.cta-link:hover { opacity: 0.9; }
+  .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 8px; }
+  .burger div { width: 24px; height: 2px; background: var(--teal); border-radius: 2px; transition: 0.3s; }
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+    background: rgba(11,18,33,0.98); z-index: 99;
+    flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 22px; font-weight: 600; color: var(--text-muted); text-decoration: none; }
+  .mobile-menu a:hover { color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .burger { display: flex; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 120px clamp(24px, 6vw, 80px) 80px; position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; top: -20%; right: -5%; width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,180,216,0.1) 0%, transparent 65%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 65%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 720px; }
+  .badge {
+    display: inline-block; padding: 6px 16px; background: var(--teal-glow);
+    color: var(--teal); border-radius: 20px; font-size: 13px; font-weight: 600;
+    margin-bottom: 24px; border: 1px solid rgba(0,180,216,0.2);
+  }
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 68px); font-weight: 900; line-height: 1.08;
+    margin-bottom: 24px; color: var(--white);
+  }
+  .hero h1 .accent { color: var(--teal); }
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px); color: var(--text-muted);
+    max-width: 540px; line-height: 1.7; margin-bottom: 40px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 32px; font-size: 15px; font-weight: 700;
+    border: none; border-radius: 8px; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--teal); color: var(--bg); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,180,216,0.3); }
+  .btn-outline { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
+  .btn-outline:hover { background: rgba(0,180,216,0.08); }
+
+  /* SECTIONS */
+  .section { padding: 100px clamp(24px, 6vw, 80px); }
+  .section-alt { padding: 100px clamp(24px, 6vw, 80px); background: rgba(0,180,216,0.02); }
+  .section-header { margin-bottom: 56px; }
+  .section-header .badge { margin-bottom: 16px; }
+  .section-header h2 {
+    font-size: clamp(28px, 4vw, 40px); font-weight: 800;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .section-header h2 .accent { color: var(--teal); }
+  .section-header p { font-size: 16px; color: var(--text-dim); max-width: 560px; line-height: 1.6; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
+  .about-text p { color: var(--text-muted); line-height: 1.8; font-size: 16px; margin-bottom: 20px; }
+  .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .cred-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 12px; padding: 20px; text-align: center;
+  }
+  .cred-card h4 { color: var(--teal); font-size: 17px; font-weight: 700; }
+  .cred-card span { color: var(--text-dim); font-size: 13px; }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .service-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 16px; padding: 36px; border-top: 3px solid var(--teal);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,180,216,0.08); }
+  .service-icon { font-size: 36px; margin-bottom: 18px; }
+  .service-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .service-card p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-bottom: 64px; }
+  .stat { text-align: center; padding: 32px; }
+  .stat .num { font-size: 52px; font-weight: 900; color: var(--teal); }
+  .stat .label { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .testimonial-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 16px; padding: 32px; border-left: 3px solid var(--teal);
+  }
+  .testimonial-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+  .testimonial-card .author { font-weight: 700; color: var(--white); font-size: 14px; }
+  .testimonial-card .company { color: var(--text-dim); font-size: 13px; }
+
+  /* INDUSTRIES */
+  .industries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .industry-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 16px; padding: 48px 24px; text-align: center;
+    transition: transform 0.3s;
+  }
+  .industry-card:hover { transform: translateY(-4px); }
+  .industry-card .icon { font-size: 48px; margin-bottom: 16px; }
+  .industry-card h3 { font-size: 17px; font-weight: 700; color: var(--white); }
+
+  /* BLOG */
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .blog-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 16px; padding: 32px; display: flex; flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,180,216,0.08); }
+  .blog-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .blog-meta .tag-sm {
+    padding: 3px 10px; background: var(--teal-glow); color: var(--teal);
+    border-radius: 12px; font-size: 11px; font-weight: 600;
+  }
+  .blog-meta .time { color: var(--text-dim); font-size: 12px; }
+  .blog-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.4; }
+  .blog-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; flex: 1; }
+  .blog-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--teal-border);
+  }
+  .blog-footer .date { color: var(--text-dim); font-size: 13px; }
+  .blog-footer .read-more { color: var(--teal); font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 16px; }
+  .form-input {
+    width: 100%; padding: 15px 18px; background: var(--bg2);
+    border: 1px solid rgba(0,180,216,0.15); border-radius: 8px;
+    color: var(--text); font-size: 15px; font-family: inherit; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--teal); }
+  textarea.form-input { min-height: 130px; resize: vertical; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .info-card {
+    background: var(--bg2); border: 1px solid var(--teal-border);
+    border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px;
+  }
+  .info-card .ic-icon { font-size: 28px; }
+  .info-card .ic-label { color: var(--text-dim); font-size: 13px; }
+  .info-card .ic-value { color: var(--white); font-weight: 600; font-size: 15px; }
+  .consult-box {
+    background: rgba(0,180,216,0.05); border: 1px solid rgba(0,180,216,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .consult-box h4 { color: var(--teal); font-weight: 700; margin-bottom: 8px; }
+  .consult-box p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px clamp(24px, 6vw, 80px); border-top: 1px solid var(--teal-border);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .footer-copy { color: var(--text-dim); font-size: 14px; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { color: var(--text-dim); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#home" class="nav-logo">⚡ Tech<span>ForCam</span></a>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#why-us">Why Us</a>
+    <a href="#industries">Industries</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact" class="cta-link">Contact Us</a>
+  </div>
+  <div class="burger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#why-us" onclick="closeMenu()">Why Us</a>
+  <a href="#industries" onclick="closeMenu()">Industries</a>
+  <a href="#blog" onclick="closeMenu()">Blog</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="badge animate">🇰🇭 Cambodia's Quality Partner</div>
+    <h1 class="animate delay-1">Elevating <span class="accent">Quality.</span><br>Empowering <span class="accent">Manufacturing.</span></h1>
+    <p class="animate delay-2">Bringing world-class quality standards to Cambodia's electronics and semiconductor manufacturing sector. From VDA 6.3 audits to Six Sigma transformation.</p>
+    <div class="hero-btns animate delay-3">
+      <a href="#services" class="btn btn-primary">Explore Services →</a>
+      <a href="#contact" class="btn btn-outline">Book Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-header">
+    <div class="badge">About Us</div>
+    <h2>Bridging Global Standards with <span class="accent">Local Expertise</span></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Technology for Cambodia was founded with a clear mission: to elevate Cambodia's manufacturing sector to world-class quality standards. We bring deep expertise from years of hands-on experience in semiconductor and electronics manufacturing.</p>
+      <p>Our founder brings extensive experience in quality management across semiconductor manufacturing, specializing in VDA 6.3 process auditing, Six Sigma methodology, and multi-functional quality leadership spanning SQE, IQC, SMT QA, NPI, ESD, Clean Room, and more.</p>
+      <p>We believe Cambodia's electronics manufacturing industry has enormous potential — and the right quality infrastructure is the key to unlocking it.</p>
+    </div>
+    <div class="cred-grid">
+      <div class="cred-card"><h4>VDA 6.3</h4><span>Lead Auditor</span></div>
+      <div class="cred-card"><h4>Six Sigma</h4><span>Black Belt</span></div>
+      <div class="cred-card"><h4>IATF 16949</h4><span>Implementation</span></div>
+      <div class="cred-card"><h4>ISO 14644</h4><span>Clean Room</span></div>
+      <div class="cred-card"><h4>SPC & FMEA</h4><span>Core Tools</span></div>
+      <div class="cred-card"><h4>DOE</h4><span>Taguchi & RSM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-alt" id="services">
+  <div class="section-header">
+    <div class="badge">Our Services</div>
+    <h2>Comprehensive <span class="accent">Quality Solutions</span></h2>
+    <p>End-to-end quality consulting tailored for electronics and semiconductor manufacturers.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">🔍</div><h3>Quality System Consulting</h3><p>ISO 9001, IATF 16949, VDA 6.3 implementation, gap analysis, and certification audit readiness.</p></div>
+    <div class="service-card"><div class="service-icon">📊</div><h3>Process Improvement</h3><p>Six Sigma DMAIC, DOE, yield optimization, COPQ reduction, and data-driven problem solving.</p></div>
+    <div class="service-card"><div class="service-icon">🤝</div><h3>Supplier Quality Management</h3><p>SQE programs, IQC systems, AVL/AML management, and supplier audit frameworks.</p></div>
+    <div class="service-card"><div class="service-icon">🎓</div><h3>Training & Workshops</h3><p>ESD, Clean Room (ISO 14644), SPC, FMEA, GR&R, Core Tools, and custom quality training programs.</p></div>
+    <div class="service-card"><div class="service-icon">⚙️</div><h3>Manufacturing Operations</h3><p>SMT process excellence, NPI launch support, OQC systems, and lean manufacturing practices.</p></div>
+    <div class="service-card"><div class="service-icon">📋</div><h3>Audit Services</h3><p>VDA 6.3 process audits, supplier audits, internal audit programs, and corrective action management.</p></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" id="why-us">
+  <div class="section-header">
+    <div class="badge">Why Choose Us</div>
+    <h2>Results That <span class="accent">Speak</span></h2>
+    <p>Deep local expertise combined with global quality standards.</p>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="num">10+</div><div class="label">Years in Semiconductor Manufacturing</div></div>
+    <div class="stat"><div class="num">50+</div><div class="label">Supplier Audits Conducted</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">Commitment to Excellence</div></div>
+    <div class="stat"><div class="num">🇰🇭</div><div class="label">Proudly Cambodian</div></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p>"Technology for Cambodia helped us achieve IATF 16949 certification in record time. Their deep understanding of both global standards and local context is unmatched."</p>
+      <div class="author">Manufacturing Director</div>
+      <div class="company">Electronics OEM, Phnom Penh</div>
+    </div>
+    <div class="testimonial-card">
+      <p>"The VDA 6.3 audit training was practical, thorough, and immediately applicable. Our audit scores improved significantly after the engagement."</p>
+      <div class="author">Quality Manager</div>
+      <div class="company">Semiconductor Manufacturer, SEA</div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="section-alt" id="industries">
+  <div class="section-header">
+    <div class="badge">Industries</div>
+    <h2>Industries We <span class="accent">Serve</span></h2>
+    <p>Specialized quality solutions for electronics manufacturing sectors.</p>
+  </div>
+  <div class="industries-grid">
+    <div class="industry-card"><div class="icon">💾</div><h3>Semiconductor & Microelectronics</h3></div>
+    <div class="industry-card"><div class="icon">🚗</div><h3>Automotive Electronics</h3></div>
+    <div class="industry-card"><div class="icon">📱</div><h3>Consumer Electronics</h3></div>
+    <div class="industry-card"><div class="icon">💡</div><h3>LED & Lighting Manufacturing</h3></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section" id="blog">
+  <div class="section-header">
+    <div class="badge">Blog</div>
+    <h2>Insights & <span class="accent">Knowledge</span></h2>
+    <p>Articles on quality management, manufacturing excellence, and industry trends in Southeast Asia.</p>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-meta"><span class="tag-sm">Quality Systems</span><span class="time">5 min read</span></div>
+      <h3>Why IATF 16949 Matters for Cambodia's Electronics Sector</h3>
+      <p>As Cambodia's electronics manufacturing grows, adopting IATF 16949 isn't optional — it's the gateway to global automotive supply chains.</p>
+      <div class="blog-footer"><span class="date">Mar 28, 2026</span><a class="read-more" href="#">Read More →</a></div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span class="tag-sm">Process Improvement</span><span class="time">7 min read</span></div>
+      <h3>Reducing COPQ: Translating Quality into Financial Language</h3>
+      <p>Learn how to map quality KPIs like yield loss and customer claims directly to your P&L — a skill every quality leader needs.</p>
+      <div class="blog-footer"><span class="date">Mar 15, 2026</span><a class="read-more" href="#">Read More →</a></div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span class="tag-sm">VDA 6.3</span><span class="time">10 min read</span></div>
+      <h3>VDA 6.3 Process Audit: A Practical Guide for SEA Manufacturers</h3>
+      <p>A step-by-step breakdown of the VDA 6.3 framework from P1 to P7, with real-world examples from the region.</p>
+      <div class="blog-footer"><span class="date">Feb 20, 2026</span><a class="read-more" href="#">Read More →</a></div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-meta"><span class="tag-sm">Training</span><span class="time">6 min read</span></div>
+      <h3>Building an ESD Program from Scratch in Your Factory</h3>
+      <p>Electrostatic discharge is a silent killer in electronics. Here's how to set up a robust ESD control program.</p>
+      <div class="blog-footer"><span class="date">Feb 05, 2026</span><a class="read-more" href="#">Read More →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-alt" id="contact">
+  <div class="section-header">
+    <div class="badge">Contact</div>
+    <h2>Let's Work <span class="accent">Together</span></h2>
+    <p>Ready to elevate your manufacturing quality? Get in touch today.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="form-group">
+      <input class="form-input" type="text" placeholder="Your Name" id="fname">
+      <input class="form-input" type="email" placeholder="Email Address" id="femail">
+      <input class="form-input" type="text" placeholder="Company (optional)" id="fcompany">
+      <textarea class="form-input" placeholder="How can we help you?" id="fmessage"></textarea>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="sendForm()">Send Message →</button>
+      <div id="formSuccess" style="display:none;color:var(--teal);font-weight:600;text-align:center;padding:12px;">✓ Message sent! We'll get back to you soon.</div>
+    </div>
+    <div class="contact-info">
+      <div class="info-card"><div class="ic-icon">📧</div><div><div class="ic-label">Email</div><div class="ic-value">info@techforcam.com</div></div></div>
+      <div class="info-card"><div class="ic-icon">📍</div><div><div class="ic-label">Location</div><div class="ic-value">Cambodia</div></div></div>
+      <div class="info-card"><div class="ic-icon">🔗</div><div><div class="ic-label">LinkedIn</div><div class="ic-value">Connect with us</div></div></div>
+      <div class="consult-box">
+        <h4>🎯 Free Initial Consultation</h4>
+        <p>Book a 30-minute call to discuss your quality challenges and how we can help transform your manufacturing operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-copy">© 2026 Technology for Cambodia. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#why-us">Why Us</a>
+    <a href="#industries">Industries</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+  function sendForm() {
+    const n = document.getElementById('fname').value;
+    const e = document.getElementById('femail').value;
+    const m = document.getElementById('fmessage').value;
+    if (n && e && m) {
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('fname').value = '';
+      document.getElementById('femail').value = '';
+      document.getElementById('fcompany').value = '';
+      document.getElementById('fmessage').value = '';
+      setTimeout(() => { document.getElementById('formSuccess').style.display = 'none'; }, 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
