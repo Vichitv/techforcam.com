@@ -6,253 +6,214 @@
 <title>Technology for Cambodia | techforcam.com</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #0B1221;
-    --bg2: #0F1B2D;
-    --teal: #00B4D8;
-    --teal-glow: rgba(0,180,216,0.12);
-    --teal-border: rgba(0,180,216,0.12);
-    --text: #E2E8F0;
-    --text-muted: #94A3B8;
-    --text-dim: #64748B;
-    --white: #F1F5F9;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{--bg:#0B1221;--bg2:#0F1B2D;--teal:#00B4D8;--teal-glow:rgba(0,180,216,0.12);--teal-border:rgba(0,180,216,0.12);--text:#E2E8F0;--text-muted:#94A3B8;--text-dim:#64748B;--white:#F1F5F9;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
 
   /* NAV */
-  .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 clamp(20px, 5vw, 60px); height: 68px;
-    background: rgba(11,18,33,0.85); backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--teal-border);
-  }
-  .nav-logo {
-    font-size: 20px; font-weight: 900; color: var(--teal);
-    text-decoration: none; letter-spacing: -0.5px;
-  }
-  .nav-logo span { color: var(--white); }
-  .nav-links { display: flex; gap: 28px; align-items: center; }
-  .nav-links a {
-    font-size: 14px; font-weight: 500; color: var(--text-muted);
-    text-decoration: none; transition: color 0.2s; position: relative;
-  }
-  .nav-links a:hover { color: var(--teal); }
-  .nav-links a.cta-link {
-    background: var(--teal); color: var(--bg); padding: 8px 20px;
-    border-radius: 6px; font-weight: 700;
-  }
-  .nav-links a.cta-link:hover { opacity: 0.9; }
-  .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 8px; }
-  .burger div { width: 24px; height: 2px; background: var(--teal); border-radius: 2px; transition: 0.3s; }
-  .mobile-menu {
-    display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
-    background: rgba(11,18,33,0.98); z-index: 99;
-    flex-direction: column; align-items: center; justify-content: center; gap: 32px;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a { font-size: 22px; font-weight: 600; color: var(--text-muted); text-decoration: none; }
-  .mobile-menu a:hover { color: var(--teal); }
-
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .burger { display: flex; }
-  }
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,60px);height:68px;background:rgba(11,18,33,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--teal-border);}
+  .nav-logo{font-size:20px;font-weight:900;color:var(--teal);text-decoration:none;letter-spacing:-0.5px;}
+  .nav-logo span{color:var(--white);}
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  .nav-links a{font-size:14px;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--teal);}
+  .nav-links a.cta-link{background:var(--teal);color:var(--bg);padding:8px 20px;border-radius:6px;font-weight:700;}
+  .nav-links a.cta-link:hover{opacity:0.9;}
+  .burger{display:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;}
+  .burger div{width:24px;height:2px;background:var(--teal);border-radius:2px;transition:0.3s;}
+  .mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:rgba(11,18,33,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-size:22px;font-weight:600;color:var(--text-muted);text-decoration:none;}
+  .mobile-menu a:hover{color:var(--teal);}
+  @media(max-width:768px){.nav-links{display:none;}.burger{display:flex;}}
 
   /* HERO */
-  .hero {
-    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
-    padding: 120px clamp(24px, 6vw, 80px) 80px; position: relative; overflow: hidden;
-  }
-  .hero-glow {
-    position: absolute; top: -20%; right: -5%; width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(0,180,216,0.1) 0%, transparent 65%);
-    border-radius: 50%; pointer-events: none;
-  }
-  .hero-glow2 {
-    position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 65%);
-    border-radius: 50%; pointer-events: none;
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 720px; }
-  .badge {
-    display: inline-block; padding: 6px 16px; background: var(--teal-glow);
-    color: var(--teal); border-radius: 20px; font-size: 13px; font-weight: 600;
-    margin-bottom: 24px; border: 1px solid rgba(0,180,216,0.2);
-  }
-  .hero h1 {
-    font-size: clamp(38px, 6vw, 68px); font-weight: 900; line-height: 1.08;
-    margin-bottom: 24px; color: var(--white);
-  }
-  .hero h1 .accent { color: var(--teal); }
-  .hero p {
-    font-size: clamp(16px, 2vw, 20px); color: var(--text-muted);
-    max-width: 540px; line-height: 1.7; margin-bottom: 40px;
-  }
-  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 15px 32px; font-size: 15px; font-weight: 700;
-    border: none; border-radius: 8px; cursor: pointer;
-    text-decoration: none; transition: all 0.2s;
-  }
-  .btn-primary { background: var(--teal); color: var(--bg); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,180,216,0.3); }
-  .btn-outline { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
-  .btn-outline:hover { background: rgba(0,180,216,0.08); }
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(24px,6vw,80px) 80px;position:relative;overflow:hidden;}
+  .hero-glow{position:absolute;top:-20%;right:-5%;width:700px;height:700px;background:radial-gradient(circle,rgba(0,180,216,0.1) 0%,transparent 65%);border-radius:50%;pointer-events:none;}
+  .hero-glow2{position:absolute;bottom:-30%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,180,216,0.06) 0%,transparent 65%);border-radius:50%;pointer-events:none;}
+  .hero-content{position:relative;z-index:1;max-width:720px;}
+  .badge{display:inline-block;padding:6px 16px;background:var(--teal-glow);color:var(--teal);border-radius:20px;font-size:13px;font-weight:600;margin-bottom:24px;border:1px solid rgba(0,180,216,0.2);}
+  .hero h1{font-size:clamp(38px,6vw,68px);font-weight:900;line-height:1.08;margin-bottom:24px;color:var(--white);}
+  .hero h1 .accent{color:var(--teal);}
+  .hero p{font-size:clamp(16px,2vw,20px);color:var(--text-muted);max-width:540px;line-height:1.7;margin-bottom:40px;}
+  .hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;font-size:15px;font-weight:700;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:inherit;}
+  .btn-primary{background:var(--teal);color:var(--bg);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,180,216,0.3);}
+  .btn-outline{background:transparent;color:var(--teal);border:2px solid var(--teal);}
+  .btn-outline:hover{background:rgba(0,180,216,0.08);}
+  .btn-danger{background:#EF4444;color:#fff;}
+  .btn-danger:hover{background:#DC2626;}
+  .btn-sm{padding:8px 18px;font-size:13px;}
 
   /* SECTIONS */
-  .section { padding: 100px clamp(24px, 6vw, 80px); }
-  .section-alt { padding: 100px clamp(24px, 6vw, 80px); background: rgba(0,180,216,0.02); }
-  .section-header { margin-bottom: 56px; }
-  .section-header .badge { margin-bottom: 16px; }
-  .section-header h2 {
-    font-size: clamp(28px, 4vw, 40px); font-weight: 800;
-    color: var(--white); margin-bottom: 12px;
-  }
-  .section-header h2 .accent { color: var(--teal); }
-  .section-header p { font-size: 16px; color: var(--text-dim); max-width: 560px; line-height: 1.6; }
+  .section{padding:100px clamp(24px,6vw,80px);}
+  .section-alt{padding:100px clamp(24px,6vw,80px);background:rgba(0,180,216,0.02);}
+  .section-header{margin-bottom:56px;}
+  .section-header .badge{margin-bottom:16px;}
+  .section-header h2{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--white);margin-bottom:12px;}
+  .section-header h2 .accent{color:var(--teal);}
+  .section-header p{font-size:16px;color:var(--text-dim);max-width:560px;line-height:1.6;}
 
   /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
-  .about-text p { color: var(--text-muted); line-height: 1.8; font-size: 16px; margin-bottom: 20px; }
-  .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .cred-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 12px; padding: 20px; text-align: center;
-  }
-  .cred-card h4 { color: var(--teal); font-size: 17px; font-weight: 700; }
-  .cred-card span { color: var(--text-dim); font-size: 13px; }
-
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; }
-  }
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start;}
+  .about-text p{color:var(--text-muted);line-height:1.8;font-size:16px;margin-bottom:20px;}
+  .cred-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .cred-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:12px;padding:20px;text-align:center;}
+  .cred-card h4{color:var(--teal);font-size:17px;font-weight:700;}
+  .cred-card span{color:var(--text-dim);font-size:13px;}
+  @media(max-width:768px){.about-grid{grid-template-columns:1fr;}}
 
   /* SERVICES */
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-  .service-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 16px; padding: 36px; border-top: 3px solid var(--teal);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,180,216,0.08); }
-  .service-icon { font-size: 36px; margin-bottom: 18px; }
-  .service-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-  .service-card p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+  .service-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:16px;padding:36px;border-top:3px solid var(--teal);transition:transform 0.3s,box-shadow 0.3s;}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,180,216,0.08);}
+  .service-icon{font-size:36px;margin-bottom:18px;}
+  .service-card h3{font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;}
+  .service-card p{color:var(--text-muted);font-size:14px;line-height:1.7;}
 
   /* STATS */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-bottom: 64px; }
-  .stat { text-align: center; padding: 32px; }
-  .stat .num { font-size: 52px; font-weight: 900; color: var(--teal); }
-  .stat .label { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-bottom:64px;}
+  .stat{text-align:center;padding:32px;}
+  .stat .num{font-size:52px;font-weight:900;color:var(--teal);}
+  .stat .label{color:var(--text-muted);font-size:14px;margin-top:6px;}
 
   /* TESTIMONIALS */
-  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-  .testimonial-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 16px; padding: 32px; border-left: 3px solid var(--teal);
-  }
-  .testimonial-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; font-style: italic; margin-bottom: 20px; }
-  .testimonial-card .author { font-weight: 700; color: var(--white); font-size: 14px; }
-  .testimonial-card .company { color: var(--text-dim); font-size: 13px; }
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;}
+  .testimonial-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:16px;padding:32px;border-left:3px solid var(--teal);}
+  .testimonial-card p{color:var(--text-muted);font-size:15px;line-height:1.7;font-style:italic;margin-bottom:20px;}
+  .testimonial-card .author{font-weight:700;color:var(--white);font-size:14px;}
+  .testimonial-card .company{color:var(--text-dim);font-size:13px;}
 
   /* INDUSTRIES */
-  .industries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-  .industry-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 16px; padding: 48px 24px; text-align: center;
-    transition: transform 0.3s;
-  }
-  .industry-card:hover { transform: translateY(-4px); }
-  .industry-card .icon { font-size: 48px; margin-bottom: 16px; }
-  .industry-card h3 { font-size: 17px; font-weight: 700; color: var(--white); }
+  .industries-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;}
+  .industry-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:16px;padding:48px 24px;text-align:center;transition:transform 0.3s;}
+  .industry-card:hover{transform:translateY(-4px);}
+  .industry-card .icon{font-size:48px;margin-bottom:16px;}
+  .industry-card h3{font-size:17px;font-weight:700;color:var(--white);}
 
   /* BLOG */
-  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-  .blog-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 16px; padding: 32px; display: flex; flex-direction: column;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,180,216,0.08); }
-  .blog-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .blog-meta .tag-sm {
-    padding: 3px 10px; background: var(--teal-glow); color: var(--teal);
-    border-radius: 12px; font-size: 11px; font-weight: 600;
-  }
-  .blog-meta .time { color: var(--text-dim); font-size: 12px; }
-  .blog-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.4; }
-  .blog-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; flex: 1; }
-  .blog-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--teal-border);
-  }
-  .blog-footer .date { color: var(--text-dim); font-size: 13px; }
-  .blog-footer .read-more { color: var(--teal); font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+  .blog-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:16px;padding:32px;display:flex;flex-direction:column;transition:transform 0.3s,box-shadow 0.3s;}
+  .blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,180,216,0.08);}
+  .blog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .blog-meta .tag-sm{padding:3px 10px;background:var(--teal-glow);color:var(--teal);border-radius:12px;font-size:11px;font-weight:600;}
+  .blog-meta .time{color:var(--text-dim);font-size:12px;}
+  .blog-card h3{font-size:18px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.4;}
+  .blog-card>p{color:var(--text-muted);font-size:14px;line-height:1.6;flex:1;}
+  .blog-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--teal-border);}
+  .blog-footer .date{color:var(--text-dim);font-size:13px;}
+  .blog-footer .read-more{color:var(--teal);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;}
 
   /* CONTACT */
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
-  .form-group { display: flex; flex-direction: column; gap: 16px; }
-  .form-input {
-    width: 100%; padding: 15px 18px; background: var(--bg2);
-    border: 1px solid rgba(0,180,216,0.15); border-radius: 8px;
-    color: var(--text); font-size: 15px; font-family: inherit; outline: none;
-    transition: border-color 0.2s;
-  }
-  .form-input:focus { border-color: var(--teal); }
-  textarea.form-input { min-height: 130px; resize: vertical; }
-  .contact-info { display: flex; flex-direction: column; gap: 20px; }
-  .info-card {
-    background: var(--bg2); border: 1px solid var(--teal-border);
-    border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px;
-  }
-  .info-card .ic-icon { font-size: 28px; }
-  .info-card .ic-label { color: var(--text-dim); font-size: 13px; }
-  .info-card .ic-value { color: var(--white); font-weight: 600; font-size: 15px; }
-  .consult-box {
-    background: rgba(0,180,216,0.05); border: 1px solid rgba(0,180,216,0.2);
-    border-radius: 12px; padding: 24px;
-  }
-  .consult-box h4 { color: var(--teal); font-weight: 700; margin-bottom: 8px; }
-  .consult-box p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  @media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+  .form-group{display:flex;flex-direction:column;gap:16px;}
+  .form-input{width:100%;padding:15px 18px;background:var(--bg2);border:1px solid rgba(0,180,216,0.15);border-radius:8px;color:var(--text);font-size:15px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+  .form-input:focus{border-color:var(--teal);}
+  textarea.form-input{min-height:130px;resize:vertical;}
+  .contact-info{display:flex;flex-direction:column;gap:20px;}
+  .info-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;}
+  .info-card .ic-icon{font-size:28px;}
+  .info-card .ic-label{color:var(--text-dim);font-size:13px;}
+  .info-card .ic-value{color:var(--white);font-weight:600;font-size:15px;}
+  .consult-box{background:rgba(0,180,216,0.05);border:1px solid rgba(0,180,216,0.2);border-radius:12px;padding:24px;}
+  .consult-box h4{color:var(--teal);font-weight:700;margin-bottom:8px;}
+  .consult-box p{color:var(--text-muted);font-size:14px;line-height:1.6;}
 
   /* FOOTER */
-  .footer {
-    padding: 40px clamp(24px, 6vw, 80px); border-top: 1px solid var(--teal-border);
-    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;
-  }
-  .footer-copy { color: var(--text-dim); font-size: 14px; }
-  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-  .footer-links a { color: var(--text-dim); font-size: 13px; text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--teal); }
+  .footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--teal-border);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;}
+  .footer-copy{color:var(--text-dim);font-size:14px;}
+  .footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+  .footer-links a{color:var(--text-dim);font-size:13px;text-decoration:none;transition:color 0.2s;}
+  .footer-links a:hover{color:var(--teal);}
 
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+  .animate{animation:fadeUp 0.7s ease forwards;}
+  .delay-1{animation-delay:0.1s;}.delay-2{animation-delay:0.2s;}.delay-3{animation-delay:0.3s;}
+
+  /* ===== ADMIN STYLES ===== */
+  .admin-overlay{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;}
+  .admin-overlay.open{display:block;}
+
+  /* LOGIN */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .login-box{background:var(--bg2);border:1px solid var(--teal-border);border-radius:16px;padding:48px 40px;width:100%;max-width:420px;}
+  .login-box h2{color:var(--white);font-size:24px;font-weight:800;margin-bottom:8px;}
+  .login-box p{color:var(--text-dim);font-size:14px;margin-bottom:32px;}
+  .login-box .form-group{gap:14px;}
+  .login-box label{color:var(--text-muted);font-size:13px;font-weight:600;}
+  .login-error{color:#EF4444;font-size:13px;display:none;margin-top:4px;}
+
+  /* DASHBOARD */
+  .admin-dash{display:none;min-height:100vh;}
+  .admin-sidebar{position:fixed;top:0;left:0;bottom:0;width:250px;background:var(--bg2);border-right:1px solid var(--teal-border);padding:24px 0;display:flex;flex-direction:column;overflow-y:auto;z-index:10;}
+  .admin-sidebar .sidebar-logo{padding:0 24px 24px;font-size:18px;font-weight:900;color:var(--teal);border-bottom:1px solid var(--teal-border);margin-bottom:16px;}
+  .admin-sidebar .sidebar-logo span{color:var(--text-dim);font-size:12px;font-weight:500;display:block;margin-top:4px;}
+  .sidebar-nav{flex:1;}
+  .sidebar-nav a{display:flex;align-items:center;gap:12px;padding:12px 24px;color:var(--text-muted);font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+  .sidebar-nav a:hover,.sidebar-nav a.active{color:var(--teal);background:rgba(0,180,216,0.06);}
+  .sidebar-nav a .nav-icon{width:20px;text-align:center;}
+  .sidebar-bottom{padding:16px 24px;border-top:1px solid var(--teal-border);}
+  .sidebar-bottom .user-info{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .sidebar-bottom .avatar{width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--bg);}
+  .sidebar-bottom .uname{color:var(--white);font-size:13px;font-weight:600;}
+  .sidebar-bottom .urole{color:var(--text-dim);font-size:11px;}
+
+  .admin-main{margin-left:250px;padding:32px 40px;min-height:100vh;}
+  .admin-main h1{font-size:28px;font-weight:800;color:var(--white);margin-bottom:8px;}
+  .admin-main .subtitle{color:var(--text-dim);font-size:14px;margin-bottom:32px;}
+
+  .dashboard-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:40px;}
+  .dash-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:12px;padding:24px;}
+  .dash-card .dc-label{color:var(--text-dim);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+  .dash-card .dc-value{font-size:32px;font-weight:900;color:var(--teal);margin:8px 0 4px;}
+  .dash-card .dc-sub{color:var(--text-muted);font-size:13px;}
+
+  /* ADMIN TABLES */
+  .admin-table{width:100%;border-collapse:collapse;margin-top:20px;}
+  .admin-table th{text-align:left;padding:12px 16px;color:var(--text-dim);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--teal-border);}
+  .admin-table td{padding:14px 16px;color:var(--text-muted);font-size:14px;border-bottom:1px solid rgba(0,180,216,0.06);}
+  .admin-table tr:hover td{background:rgba(0,180,216,0.03);}
+  .status-badge{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;}
+  .status-published{background:rgba(34,197,94,0.12);color:#22C55E;}
+  .status-draft{background:rgba(234,179,8,0.12);color:#EAB308;}
+
+  /* ADMIN PANEL SECTIONS */
+  .admin-panel{display:none;}
+  .admin-panel.active{display:block;}
+
+  /* EDIT FORM */
+  .edit-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:12px;padding:28px;margin-bottom:20px;}
+  .edit-card h3{color:var(--white);font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--teal-border);}
+  .edit-row{display:grid;grid-template-columns:140px 1fr;gap:12px;align-items:start;margin-bottom:14px;}
+  .edit-row label{color:var(--text-muted);font-size:13px;font-weight:600;padding-top:10px;}
+  .edit-row .form-input{margin:0;}
+  .edit-actions{display:flex;gap:12px;margin-top:20px;}
+
+  /* MESSAGES TABLE */
+  .msg-card{background:var(--bg2);border:1px solid var(--teal-border);border-radius:12px;padding:20px;margin-bottom:12px;}
+  .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .msg-from{color:var(--white);font-weight:600;font-size:14px;}
+  .msg-date{color:var(--text-dim);font-size:12px;}
+  .msg-company{color:var(--teal);font-size:13px;margin-bottom:8px;}
+  .msg-body{color:var(--text-muted);font-size:14px;line-height:1.6;}
+
+  .toast{position:fixed;bottom:24px;right:24px;background:#22C55E;color:#fff;padding:14px 24px;border-radius:8px;font-weight:600;font-size:14px;z-index:999;display:none;animation:fadeUp 0.3s ease;}
+
+  @media(max-width:768px){
+    .admin-sidebar{width:200px;}
+    .admin-main{margin-left:200px;padding:24px 20px;}
+    .edit-row{grid-template-columns:1fr;}
   }
-  .animate { animation: fadeUp 0.7s ease forwards; }
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.2s; }
-  .delay-3 { animation-delay: 0.3s; }
-  .delay-4 { animation-delay: 0.4s; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ========== PUBLIC WEBSITE ========== -->
+<div id="publicSite">
+
 <nav class="nav">
   <a href="#home" class="nav-logo">⚡ Tech<span>ForCam</span></a>
   <div class="nav-links">
@@ -284,9 +245,9 @@
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-content">
-    <div class="badge animate">🇰🇭 Cambodia's Quality Partner</div>
-    <h1 class="animate delay-1">Elevating <span class="accent">Quality.</span><br>Empowering <span class="accent">Manufacturing.</span></h1>
-    <p class="animate delay-2">Bringing world-class quality standards to Cambodia's electronics and semiconductor manufacturing sector. From VDA 6.3 audits to Six Sigma transformation.</p>
+    <div class="badge">🇰🇭 Cambodia's Quality Partner</div>
+    <h1 class="animate delay-1">Elevating <span class="accent" id="pub-hero-title">Quality.</span><br>Empowering <span class="accent">Manufacturing.</span></h1>
+    <p class="animate delay-2" id="pub-hero-sub">Bringing world-class quality standards to Cambodia's electronics and semiconductor manufacturing sector. From VDA 6.3 audits to Six Sigma transformation.</p>
     <div class="hero-btns animate delay-3">
       <a href="#services" class="btn btn-primary">Explore Services →</a>
       <a href="#contact" class="btn btn-outline">Book Consultation</a>
@@ -301,7 +262,7 @@
     <h2>Bridging Global Standards with <span class="accent">Local Expertise</span></h2>
   </div>
   <div class="about-grid">
-    <div class="about-text">
+    <div class="about-text" id="pub-about-text">
       <p>Technology for Cambodia was founded with a clear mission: to elevate Cambodia's manufacturing sector to world-class quality standards. We bring deep expertise from years of hands-on experience in semiconductor and electronics manufacturing.</p>
       <p>Our founder brings extensive experience in quality management across semiconductor manufacturing, specializing in VDA 6.3 process auditing, Six Sigma methodology, and multi-functional quality leadership spanning SQE, IQC, SMT QA, NPI, ESD, Clean Room, and more.</p>
       <p>We believe Cambodia's electronics manufacturing industry has enormous potential — and the right quality infrastructure is the key to unlocking it.</p>
@@ -324,7 +285,7 @@
     <h2>Comprehensive <span class="accent">Quality Solutions</span></h2>
     <p>End-to-end quality consulting tailored for electronics and semiconductor manufacturers.</p>
   </div>
-  <div class="services-grid">
+  <div class="services-grid" id="pub-services-grid">
     <div class="service-card"><div class="service-icon">🔍</div><h3>Quality System Consulting</h3><p>ISO 9001, IATF 16949, VDA 6.3 implementation, gap analysis, and certification audit readiness.</p></div>
     <div class="service-card"><div class="service-icon">📊</div><h3>Process Improvement</h3><p>Six Sigma DMAIC, DOE, yield optimization, COPQ reduction, and data-driven problem solving.</p></div>
     <div class="service-card"><div class="service-icon">🤝</div><h3>Supplier Quality Management</h3><p>SQE programs, IQC systems, AVL/AML management, and supplier audit frameworks.</p></div>
@@ -348,16 +309,8 @@
     <div class="stat"><div class="num">🇰🇭</div><div class="label">Proudly Cambodian</div></div>
   </div>
   <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <p>"Technology for Cambodia helped us achieve IATF 16949 certification in record time. Their deep understanding of both global standards and local context is unmatched."</p>
-      <div class="author">Manufacturing Director</div>
-      <div class="company">Electronics OEM, Phnom Penh</div>
-    </div>
-    <div class="testimonial-card">
-      <p>"The VDA 6.3 audit training was practical, thorough, and immediately applicable. Our audit scores improved significantly after the engagement."</p>
-      <div class="author">Quality Manager</div>
-      <div class="company">Semiconductor Manufacturer, SEA</div>
-    </div>
+    <div class="testimonial-card"><p>"Technology for Cambodia helped us achieve IATF 16949 certification in record time. Their deep understanding of both global standards and local context is unmatched."</p><div class="author">Manufacturing Director</div><div class="company">Electronics OEM, Phnom Penh</div></div>
+    <div class="testimonial-card"><p>"The VDA 6.3 audit training was practical, thorough, and immediately applicable. Our audit scores improved significantly after the engagement."</p><div class="author">Quality Manager</div><div class="company">Semiconductor Manufacturer, SEA</div></div>
   </div>
 </section>
 
@@ -383,32 +336,7 @@
     <h2>Insights & <span class="accent">Knowledge</span></h2>
     <p>Articles on quality management, manufacturing excellence, and industry trends in Southeast Asia.</p>
   </div>
-  <div class="blog-grid">
-    <div class="blog-card">
-      <div class="blog-meta"><span class="tag-sm">Quality Systems</span><span class="time">5 min read</span></div>
-      <h3>Why IATF 16949 Matters for Cambodia's Electronics Sector</h3>
-      <p>As Cambodia's electronics manufacturing grows, adopting IATF 16949 isn't optional — it's the gateway to global automotive supply chains.</p>
-      <div class="blog-footer"><span class="date">Mar 28, 2026</span><a class="read-more" href="#">Read More →</a></div>
-    </div>
-    <div class="blog-card">
-      <div class="blog-meta"><span class="tag-sm">Process Improvement</span><span class="time">7 min read</span></div>
-      <h3>Reducing COPQ: Translating Quality into Financial Language</h3>
-      <p>Learn how to map quality KPIs like yield loss and customer claims directly to your P&L — a skill every quality leader needs.</p>
-      <div class="blog-footer"><span class="date">Mar 15, 2026</span><a class="read-more" href="#">Read More →</a></div>
-    </div>
-    <div class="blog-card">
-      <div class="blog-meta"><span class="tag-sm">VDA 6.3</span><span class="time">10 min read</span></div>
-      <h3>VDA 6.3 Process Audit: A Practical Guide for SEA Manufacturers</h3>
-      <p>A step-by-step breakdown of the VDA 6.3 framework from P1 to P7, with real-world examples from the region.</p>
-      <div class="blog-footer"><span class="date">Feb 20, 2026</span><a class="read-more" href="#">Read More →</a></div>
-    </div>
-    <div class="blog-card">
-      <div class="blog-meta"><span class="tag-sm">Training</span><span class="time">6 min read</span></div>
-      <h3>Building an ESD Program from Scratch in Your Factory</h3>
-      <p>Electrostatic discharge is a silent killer in electronics. Here's how to set up a robust ESD control program.</p>
-      <div class="blog-footer"><span class="date">Feb 05, 2026</span><a class="read-more" href="#">Read More →</a></div>
-    </div>
-  </div>
+  <div class="blog-grid" id="pub-blog-grid"></div>
 </section>
 
 <!-- CONTACT -->
@@ -428,51 +356,420 @@
       <div id="formSuccess" style="display:none;color:var(--teal);font-weight:600;text-align:center;padding:12px;">✓ Message sent! We'll get back to you soon.</div>
     </div>
     <div class="contact-info">
-      <div class="info-card"><div class="ic-icon">📧</div><div><div class="ic-label">Email</div><div class="ic-value">info@techforcam.com</div></div></div>
-      <div class="info-card"><div class="ic-icon">📍</div><div><div class="ic-label">Location</div><div class="ic-value">Cambodia</div></div></div>
+      <div class="info-card"><div class="ic-icon">📧</div><div><div class="ic-label">Email</div><div class="ic-value" id="pub-email">info@techforcam.com</div></div></div>
+      <div class="info-card"><div class="ic-icon">📍</div><div><div class="ic-label">Location</div><div class="ic-value" id="pub-location">Cambodia</div></div></div>
       <div class="info-card"><div class="ic-icon">🔗</div><div><div class="ic-label">LinkedIn</div><div class="ic-value">Connect with us</div></div></div>
-      <div class="consult-box">
-        <h4>🎯 Free Initial Consultation</h4>
-        <p>Book a 30-minute call to discuss your quality challenges and how we can help transform your manufacturing operations.</p>
-      </div>
+      <div class="consult-box"><h4>🎯 Free Initial Consultation</h4><p>Book a 30-minute call to discuss your quality challenges and how we can help transform your manufacturing operations.</p></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-copy">© 2026 Technology for Cambodia. All rights reserved.</div>
   <div class="footer-links">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#why-us">Why Us</a>
-    <a href="#industries">Industries</a>
-    <a href="#blog">Blog</a>
-    <a href="#contact">Contact</a>
+    <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#why-us">Why Us</a><a href="#industries">Industries</a><a href="#blog">Blog</a><a href="#contact">Contact</a>
+    <a href="#" onclick="event.preventDefault();showAdmin()" style="color:var(--teal-border);font-size:11px;">Admin</a>
   </div>
 </footer>
 
+</div><!-- end publicSite -->
+
+
+<!-- ========== ADMIN OVERLAY ========== -->
+<div class="admin-overlay" id="adminOverlay">
+
+  <!-- LOGIN -->
+  <div id="adminLogin" class="login-wrap">
+    <div class="login-box">
+      <div style="text-align:center;margin-bottom:8px;font-size:32px;">⚡</div>
+      <h2 style="text-align:center;">Admin Login</h2>
+      <p style="text-align:center;">Technology for Cambodia — Control Panel</p>
+      <div class="form-group">
+        <label>Username</label>
+        <input class="form-input" type="text" id="adminUser" placeholder="Enter username" autocomplete="off">
+        <label>Password</label>
+        <input class="form-input" type="password" id="adminPass" placeholder="Enter password">
+        <div class="login-error" id="loginError">Invalid username or password</div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" onclick="doLogin()">Sign In →</button>
+        <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="hideAdmin()">← Back to Website</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="adminDash" class="admin-dash">
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo">⚡ TechForCam<span>Admin Panel</span></div>
+      <div class="sidebar-nav">
+        <a class="active" onclick="showPanel('overview')"><span class="nav-icon">📊</span> Dashboard</a>
+        <a onclick="showPanel('hero-edit')"><span class="nav-icon">🏠</span> Hero Section</a>
+        <a onclick="showPanel('about-edit')"><span class="nav-icon">ℹ️</span> About</a>
+        <a onclick="showPanel('services-edit')"><span class="nav-icon">🛠️</span> Services</a>
+        <a onclick="showPanel('blog-edit')"><span class="nav-icon">📝</span> Blog Posts</a>
+        <a onclick="showPanel('messages')"><span class="nav-icon">📬</span> Messages</a>
+        <a onclick="showPanel('settings')"><span class="nav-icon">⚙️</span> Settings</a>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="user-info">
+          <div class="avatar">VV</div>
+          <div><div class="uname">Vichit_Vorng</div><div class="urole">Administrator</div></div>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" onclick="doLogout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- OVERVIEW -->
+      <div class="admin-panel active" id="panel-overview">
+        <h1>Dashboard</h1>
+        <p class="subtitle">Welcome back, Vichit. Here's your website overview.</p>
+        <div class="dashboard-cards">
+          <div class="dash-card"><div class="dc-label">Blog Posts</div><div class="dc-value" id="dc-blogs">4</div><div class="dc-sub">Total published</div></div>
+          <div class="dash-card"><div class="dc-label">Services</div><div class="dc-value">6</div><div class="dc-sub">Active services</div></div>
+          <div class="dash-card"><div class="dc-label">Messages</div><div class="dc-value" id="dc-msgs">0</div><div class="dc-sub">Contact inquiries</div></div>
+          <div class="dash-card"><div class="dc-label">Status</div><div class="dc-value" style="font-size:20px;color:#22C55E;">● Live</div><div class="dc-sub">techforcam.com</div></div>
+        </div>
+
+        <h2 style="font-size:18px;font-weight:700;color:var(--white);margin-bottom:16px;">Recent Blog Posts</h2>
+        <table class="admin-table">
+          <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody id="overview-blog-table"></tbody>
+        </table>
+      </div>
+
+      <!-- HERO EDIT -->
+      <div class="admin-panel" id="panel-hero-edit">
+        <h1>Edit Hero Section</h1>
+        <p class="subtitle">Update the main landing area of your website.</p>
+        <div class="edit-card">
+          <h3>Hero Content</h3>
+          <div class="edit-row"><label>Badge Text</label><input class="form-input" id="edit-hero-badge" value="🇰🇭 Cambodia's Quality Partner"></div>
+          <div class="edit-row"><label>Headline</label><input class="form-input" id="edit-hero-headline" value="Elevating Quality. Empowering Manufacturing."></div>
+          <div class="edit-row"><label>Subtitle</label><textarea class="form-input" id="edit-hero-subtitle" rows="3">Bringing world-class quality standards to Cambodia's electronics and semiconductor manufacturing sector. From VDA 6.3 audits to Six Sigma transformation.</textarea></div>
+          <div class="edit-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveHero()">💾 Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT EDIT -->
+      <div class="admin-panel" id="panel-about-edit">
+        <h1>Edit About Section</h1>
+        <p class="subtitle">Update your company story and mission.</p>
+        <div class="edit-card">
+          <h3>About Content</h3>
+          <div class="edit-row"><label>Paragraph 1</label><textarea class="form-input" id="edit-about-p1" rows="3">Technology for Cambodia was founded with a clear mission: to elevate Cambodia's manufacturing sector to world-class quality standards. We bring deep expertise from years of hands-on experience in semiconductor and electronics manufacturing.</textarea></div>
+          <div class="edit-row"><label>Paragraph 2</label><textarea class="form-input" id="edit-about-p2" rows="3">Our founder brings extensive experience in quality management across semiconductor manufacturing, specializing in VDA 6.3 process auditing, Six Sigma methodology, and multi-functional quality leadership spanning SQE, IQC, SMT QA, NPI, ESD, Clean Room, and more.</textarea></div>
+          <div class="edit-row"><label>Paragraph 3</label><textarea class="form-input" id="edit-about-p3" rows="3">We believe Cambodia's electronics manufacturing industry has enormous potential — and the right quality infrastructure is the key to unlocking it.</textarea></div>
+          <div class="edit-actions">
+            <button class="btn btn-primary btn-sm" onclick="saveAbout()">💾 Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES EDIT -->
+      <div class="admin-panel" id="panel-services-edit">
+        <h1>Manage Services</h1>
+        <p class="subtitle">Edit your service offerings.</p>
+        <div id="services-edit-list"></div>
+        <button class="btn btn-primary btn-sm" onclick="saveServices()" style="margin-top:16px;">💾 Save All Services</button>
+      </div>
+
+      <!-- BLOG EDIT -->
+      <div class="admin-panel" id="panel-blog-edit">
+        <h1>Manage Blog Posts</h1>
+        <p class="subtitle">Create, edit, and manage your blog content.</p>
+        <button class="btn btn-primary btn-sm" onclick="addBlogPost()" style="margin-bottom:20px;">+ New Blog Post</button>
+        <div id="blog-edit-list"></div>
+      </div>
+
+      <!-- MESSAGES -->
+      <div class="admin-panel" id="panel-messages">
+        <h1>Contact Messages</h1>
+        <p class="subtitle">Messages from your website contact form.</p>
+        <div id="messages-list"><p style="color:var(--text-dim);font-style:italic;">No messages yet. Messages will appear here when visitors submit the contact form.</p></div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-panel" id="panel-settings">
+        <h1>Settings</h1>
+        <p class="subtitle">General website settings and configuration.</p>
+        <div class="edit-card">
+          <h3>Contact Information</h3>
+          <div class="edit-row"><label>Email</label><input class="form-input" id="edit-email" value="info@techforcam.com"></div>
+          <div class="edit-row"><label>Location</label><input class="form-input" id="edit-location" value="Cambodia"></div>
+          <div class="edit-row"><label>Phone</label><input class="form-input" id="edit-phone" value=""></div>
+          <div class="edit-row"><label>LinkedIn URL</label><input class="form-input" id="edit-linkedin" value=""></div>
+          <div class="edit-actions"><button class="btn btn-primary btn-sm" onclick="saveSettings()">💾 Save Settings</button></div>
+        </div>
+        <div class="edit-card">
+          <h3>Change Password</h3>
+          <div class="edit-row"><label>Current Password</label><input class="form-input" type="password" id="edit-cur-pass"></div>
+          <div class="edit-row"><label>New Password</label><input class="form-input" type="password" id="edit-new-pass"></div>
+          <div class="edit-row"><label>Confirm New</label><input class="form-input" type="password" id="edit-conf-pass"></div>
+          <div class="edit-actions"><button class="btn btn-primary btn-sm" onclick="changePassword()">🔒 Update Password</button></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  }
-  function closeMenu() {
-    document.getElementById('mobileMenu').classList.remove('open');
-  }
-  function sendForm() {
-    const n = document.getElementById('fname').value;
-    const e = document.getElementById('femail').value;
-    const m = document.getElementById('fmessage').value;
-    if (n && e && m) {
-      document.getElementById('formSuccess').style.display = 'block';
-      document.getElementById('fname').value = '';
-      document.getElementById('femail').value = '';
-      document.getElementById('fcompany').value = '';
-      document.getElementById('fmessage').value = '';
-      setTimeout(() => { document.getElementById('formSuccess').style.display = 'none'; }, 3000);
+  // ===== DATA STORE =====
+  let adminCreds = { user: "Vichit_Vorng", pass: "A@dmin123" };
+  let isLoggedIn = false;
+  let messages = [];
+
+  let blogPosts = [
+    { id:1, date:"Mar 28, 2026", category:"Quality Systems", title:"Why IATF 16949 Matters for Cambodia's Electronics Sector", excerpt:"As Cambodia's electronics manufacturing grows, adopting IATF 16949 isn't optional — it's the gateway to global automotive supply chains.", readTime:"5 min read", status:"published" },
+    { id:2, date:"Mar 15, 2026", category:"Process Improvement", title:"Reducing COPQ: Translating Quality into Financial Language", excerpt:"Learn how to map quality KPIs like yield loss and customer claims directly to your P&L — a skill every quality leader needs.", readTime:"7 min read", status:"published" },
+    { id:3, date:"Feb 20, 2026", category:"VDA 6.3", title:"VDA 6.3 Process Audit: A Practical Guide for SEA Manufacturers", excerpt:"A step-by-step breakdown of the VDA 6.3 framework from P1 to P7, with real-world examples from the region.", readTime:"10 min read", status:"published" },
+    { id:4, date:"Feb 05, 2026", category:"Training", title:"Building an ESD Program from Scratch in Your Factory", excerpt:"Electrostatic discharge is a silent killer in electronics. Here's how to set up a robust ESD control program.", readTime:"6 min read", status:"published" }
+  ];
+
+  let services = [
+    { icon:"🔍", title:"Quality System Consulting", desc:"ISO 9001, IATF 16949, VDA 6.3 implementation, gap analysis, and certification audit readiness." },
+    { icon:"📊", title:"Process Improvement", desc:"Six Sigma DMAIC, DOE, yield optimization, COPQ reduction, and data-driven problem solving." },
+    { icon:"🤝", title:"Supplier Quality Management", desc:"SQE programs, IQC systems, AVL/AML management, and supplier audit frameworks." },
+    { icon:"🎓", title:"Training & Workshops", desc:"ESD, Clean Room (ISO 14644), SPC, FMEA, GR&R, Core Tools, and custom quality training programs." },
+    { icon:"⚙️", title:"Manufacturing Operations", desc:"SMT process excellence, NPI launch support, OQC systems, and lean manufacturing practices." },
+    { icon:"📋", title:"Audit Services", desc:"VDA 6.3 process audits, supplier audits, internal audit programs, and corrective action management." }
+  ];
+
+  // ===== NAV =====
+  function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // ===== CONTACT FORM =====
+  function sendForm(){
+    const n=document.getElementById('fname').value, e=document.getElementById('femail').value, c=document.getElementById('fcompany').value, m=document.getElementById('fmessage').value;
+    if(n&&e&&m){
+      messages.push({name:n,email:e,company:c,message:m,date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})});
+      document.getElementById('formSuccess').style.display='block';
+      document.getElementById('fname').value='';document.getElementById('femail').value='';document.getElementById('fcompany').value='';document.getElementById('fmessage').value='';
+      updateMsgCount();
+      setTimeout(()=>{document.getElementById('formSuccess').style.display='none';},3000);
     }
   }
+
+  // ===== ADMIN =====
+  function showAdmin(){ document.getElementById('adminOverlay').classList.add('open'); }
+  function hideAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
+
+  function doLogin(){
+    const u=document.getElementById('adminUser').value, p=document.getElementById('adminPass').value;
+    if(u===adminCreds.user && p===adminCreds.pass){
+      isLoggedIn=true;
+      document.getElementById('adminLogin').style.display='none';
+      document.getElementById('adminDash').style.display='block';
+      document.getElementById('loginError').style.display='none';
+      refreshAllAdmin();
+    } else {
+      document.getElementById('loginError').style.display='block';
+    }
+  }
+
+  function doLogout(){
+    isLoggedIn=false;
+    document.getElementById('adminDash').style.display='none';
+    document.getElementById('adminLogin').style.display='flex';
+    document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';
+    hideAdmin();
+  }
+
+  function showPanel(id){
+    document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    if(id==='services-edit') renderServicesEdit();
+    if(id==='blog-edit') renderBlogEdit();
+    if(id==='messages') renderMessages();
+    if(id==='overview') refreshOverview();
+  }
+
+  function showToast(msg){
+    const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+    setTimeout(()=>{t.style.display='none';},2500);
+  }
+
+  // ===== HERO =====
+  function saveHero(){
+    const sub=document.getElementById('edit-hero-subtitle').value;
+    document.getElementById('pub-hero-sub').textContent=sub;
+    showToast('✓ Hero section updated!');
+  }
+
+  // ===== ABOUT =====
+  function saveAbout(){
+    const p1=document.getElementById('edit-about-p1').value, p2=document.getElementById('edit-about-p2').value, p3=document.getElementById('edit-about-p3').value;
+    document.getElementById('pub-about-text').innerHTML='<p>'+p1+'</p><p>'+p2+'</p><p>'+p3+'</p>';
+    showToast('✓ About section updated!');
+  }
+
+  // ===== SERVICES =====
+  function renderServicesEdit(){
+    let h='';
+    services.forEach((s,i)=>{
+      h+=`<div class="edit-card"><h3>${s.icon} ${s.title}</h3>
+        <div class="edit-row"><label>Icon (emoji)</label><input class="form-input" id="svc-icon-${i}" value="${s.icon}"></div>
+        <div class="edit-row"><label>Title</label><input class="form-input" id="svc-title-${i}" value="${s.title}"></div>
+        <div class="edit-row"><label>Description</label><textarea class="form-input" id="svc-desc-${i}" rows="2">${s.desc}</textarea></div>
+      </div>`;
+    });
+    document.getElementById('services-edit-list').innerHTML=h;
+  }
+
+  function saveServices(){
+    services.forEach((s,i)=>{
+      s.icon=document.getElementById('svc-icon-'+i).value;
+      s.title=document.getElementById('svc-title-'+i).value;
+      s.desc=document.getElementById('svc-desc-'+i).value;
+    });
+    renderPublicServices();
+    showToast('✓ Services updated!');
+  }
+
+  function renderPublicServices(){
+    let h='';
+    services.forEach(s=>{
+      h+=`<div class="service-card"><div class="service-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.desc}</p></div>`;
+    });
+    document.getElementById('pub-services-grid').innerHTML=h;
+  }
+
+  // ===== BLOG =====
+  function renderBlogEdit(){
+    let h='';
+    blogPosts.forEach((b,i)=>{
+      h+=`<div class="edit-card"><h3>${b.status==='published'?'🟢':'🟡'} ${b.title}</h3>
+        <div class="edit-row"><label>Title</label><input class="form-input" id="blog-title-${i}" value="${b.title}"></div>
+        <div class="edit-row"><label>Category</label><input class="form-input" id="blog-cat-${i}" value="${b.category}"></div>
+        <div class="edit-row"><label>Excerpt</label><textarea class="form-input" id="blog-exc-${i}" rows="2">${b.excerpt}</textarea></div>
+        <div class="edit-row"><label>Read Time</label><input class="form-input" id="blog-rt-${i}" value="${b.readTime}"></div>
+        <div class="edit-row"><label>Date</label><input class="form-input" id="blog-date-${i}" value="${b.date}"></div>
+        <div class="edit-row"><label>Status</label>
+          <select class="form-input" id="blog-status-${i}">
+            <option value="published" ${b.status==='published'?'selected':''}>Published</option>
+            <option value="draft" ${b.status==='draft'?'selected':''}>Draft</option>
+          </select>
+        </div>
+        <div class="edit-actions">
+          <button class="btn btn-primary btn-sm" onclick="saveBlogPost(${i})">💾 Save</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteBlogPost(${i})">🗑️ Delete</button>
+        </div>
+      </div>`;
+    });
+    document.getElementById('blog-edit-list').innerHTML=h;
+  }
+
+  function saveBlogPost(i){
+    blogPosts[i].title=document.getElementById('blog-title-'+i).value;
+    blogPosts[i].category=document.getElementById('blog-cat-'+i).value;
+    blogPosts[i].excerpt=document.getElementById('blog-exc-'+i).value;
+    blogPosts[i].readTime=document.getElementById('blog-rt-'+i).value;
+    blogPosts[i].date=document.getElementById('blog-date-'+i).value;
+    blogPosts[i].status=document.getElementById('blog-status-'+i).value;
+    renderPublicBlog();
+    renderBlogEdit();
+    showToast('✓ Blog post saved!');
+  }
+
+  function deleteBlogPost(i){
+    if(confirm('Delete "'+blogPosts[i].title+'"?')){
+      blogPosts.splice(i,1);
+      renderPublicBlog();
+      renderBlogEdit();
+      updateBlogCount();
+      showToast('✓ Blog post deleted.');
+    }
+  }
+
+  function addBlogPost(){
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    blogPosts.unshift({id:Date.now(),date:today,category:"New Category",title:"New Blog Post",excerpt:"Write your excerpt here...",readTime:"5 min read",status:"draft"});
+    renderBlogEdit();
+    updateBlogCount();
+    showToast('✓ New draft created!');
+  }
+
+  function renderPublicBlog(){
+    const published=blogPosts.filter(b=>b.status==='published');
+    let h='';
+    published.forEach(b=>{
+      h+=`<div class="blog-card">
+        <div class="blog-meta"><span class="tag-sm">${b.category}</span><span class="time">${b.readTime}</span></div>
+        <h3>${b.title}</h3><p>${b.excerpt}</p>
+        <div class="blog-footer"><span class="date">${b.date}</span><a class="read-more" href="#">Read More →</a></div>
+      </div>`;
+    });
+    document.getElementById('pub-blog-grid').innerHTML=h;
+    updateBlogCount();
+  }
+
+  // ===== MESSAGES =====
+  function renderMessages(){
+    if(messages.length===0){
+      document.getElementById('messages-list').innerHTML='<p style="color:var(--text-dim);font-style:italic;">No messages yet.</p>';
+      return;
+    }
+    let h='';
+    messages.slice().reverse().forEach((m,i)=>{
+      h+=`<div class="msg-card">
+        <div class="msg-header"><span class="msg-from">${m.name} (${m.email})</span><span class="msg-date">${m.date}</span></div>
+        ${m.company?'<div class="msg-company">'+m.company+'</div>':''}
+        <div class="msg-body">${m.message}</div>
+      </div>`;
+    });
+    document.getElementById('messages-list').innerHTML=h;
+  }
+
+  // ===== SETTINGS =====
+  function saveSettings(){
+    const email=document.getElementById('edit-email').value;
+    const loc=document.getElementById('edit-location').value;
+    document.getElementById('pub-email').textContent=email;
+    document.getElementById('pub-location').textContent=loc;
+    showToast('✓ Settings saved!');
+  }
+
+  function changePassword(){
+    const cur=document.getElementById('edit-cur-pass').value;
+    const nw=document.getElementById('edit-new-pass').value;
+    const conf=document.getElementById('edit-conf-pass').value;
+    if(cur!==adminCreds.pass){showToast('❌ Current password is incorrect.');return;}
+    if(nw.length<6){showToast('❌ Password must be at least 6 characters.');return;}
+    if(nw!==conf){showToast('❌ New passwords do not match.');return;}
+    adminCreds.pass=nw;
+    document.getElementById('edit-cur-pass').value='';document.getElementById('edit-new-pass').value='';document.getElementById('edit-conf-pass').value='';
+    showToast('✓ Password updated successfully!');
+  }
+
+  // ===== HELPERS =====
+  function updateMsgCount(){ document.getElementById('dc-msgs').textContent=messages.length; }
+  function updateBlogCount(){ document.getElementById('dc-blogs').textContent=blogPosts.filter(b=>b.status==='published').length; }
+
+  function refreshOverview(){
+    updateMsgCount();updateBlogCount();
+    let h='';
+    blogPosts.forEach(b=>{
+      h+=`<tr><td style="color:var(--white);font-weight:600;">${b.title}</td><td>${b.category}</td><td>${b.date}</td><td><span class="status-badge status-${b.status}">${b.status}</span></td></tr>`;
+    });
+    document.getElementById('overview-blog-table').innerHTML=h;
+  }
+
+  function refreshAllAdmin(){ refreshOverview(); }
+
+  // ===== INIT =====
+  renderPublicBlog();
+
+  // Enter key on login
+  document.getElementById('adminPass').addEventListener('keypress',function(e){if(e.key==='Enter')doLogin();});
+  document.getElementById('adminUser').addEventListener('keypress',function(e){if(e.key==='Enter')document.getElementById('adminPass').focus();});
 </script>
 
 </body>
