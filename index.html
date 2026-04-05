@@ -247,6 +247,8 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
   </div>
 </section>
 
+<div id="customPagesContainer"></div>
+
 <section class="section" id="blog">
   <div class="section-header"><div class="badge">Blog</div><h2>Insights & <span class="accent">Knowledge</span></h2><p>Articles on quality management, manufacturing excellence, and industry trends.</p></div>
   <div class="blog-grid" id="blogGrid"><p style="color:var(--text-dim);">Loading posts...</p></div>
@@ -308,6 +310,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
         <a href="#" onclick="switchTab(event,'messages')"><span class="nav-icon">💬</span> Messages</a>
         <a href="#" onclick="switchTab(event,'customize')"><span class="nav-icon">🎨</span> Customize</a>
         <a href="#" onclick="switchTab(event,'pages')"><span class="nav-icon">📄</span> Pages</a>
+        <a href="#" onclick="switchTab(event,'newpage')"><span class="nav-icon">➕</span> Create Page</a>
         <a href="#" onclick="switchTab(event,'database')"><span class="nav-icon">🗄️</span> Database</a>
         <a href="#" onclick="switchTab(event,'settings')"><span class="nav-icon">⚙️</span> Settings</a>
       </nav>
@@ -521,9 +524,9 @@ function switchTab(e,tab){
   e.preventDefault();
   document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.remove('active'));
   e.currentTarget.classList.add('active');
-  const titles={dashboard:'Dashboard',posts:'Blog Posts',newpost:'Write New Post',messages:'Messages',customize:'Customize Website',pages:'Manage Pages',database:'Database Connection',settings:'Settings'};
+  const titles={dashboard:'Dashboard',posts:'Blog Posts',newpost:'Write New Post',messages:'Messages',customize:'Customize Website',pages:'Manage Pages',newpage:'Create New Page',database:'Database Connection',settings:'Settings'};
   document.getElementById('adminPageTitle').textContent=titles[tab]||'Dashboard';
-  ({dashboard:renderDashboard,posts:renderPosts,newpost:()=>renderNewPost(0),messages:renderMessages,customize:renderCustomize,pages:renderPages,database:renderDatabase,settings:renderSettings}[tab]||renderDashboard)();
+  ({dashboard:renderDashboard,posts:renderPosts,newpost:()=>renderNewPost(0),messages:renderMessages,customize:renderCustomize,pages:renderPages,newpage:()=>renderNewPage(0),database:renderDatabase,settings:renderSettings}[tab]||renderDashboard)();
 }
 
 function renderDashboard(){
@@ -719,14 +722,31 @@ function renderCustomize(){
 }
 
 function renderPages(){
-  const pages=['Home / Hero','About Us','Services','Why Choose Us','Industries','Blog','Contact'];
+  const defaultPages=['Home / Hero','About Us','Services','Why Choose Us','Industries','Blog','Contact'];
   document.getElementById('adminContent').innerHTML=`
-    <p style="color:var(--text-dim);margin-bottom:20px;">Manage pages and SEO</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+      <p style="color:var(--text-dim);">Manage default and custom pages</p>
+      <button class="btn btn-primary btn-sm" onclick="switchTab(event,'newpage')">+ Create New Page</button>
+    </div>
+    <h3 style="color:var(--white);margin-bottom:12px;">Default Pages</h3>
     <table class="admin-table"><thead><tr><th>Page</th><th>Status</th><th>Visible</th><th>Actions</th></tr></thead><tbody>
-    ${pages.map(p=>`<tr><td style="color:var(--white);font-weight:600;">${p}</td><td><span class="status status-pub">active</span></td>
+    ${defaultPages.map(p=>`<tr><td style="color:var(--white);font-weight:600;">${p}</td><td><span class="status status-pub">active</span></td>
       <td><div class="toggle on" style="display:inline-block;" onclick="this.classList.toggle('on')"></div></td>
       <td><button class="toolbar-btn">Edit</button></td></tr>`).join('')}
     </tbody></table>
+    ${customPages.length>0?`
+    <h3 style="color:var(--white);margin:32px 0 12px;">Custom Pages</h3>
+    <table class="admin-table"><thead><tr><th>Page</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+    ${customPages.map((p,i)=>`<tr>
+      <td style="color:var(--white);font-weight:600;">${p.title}</td>
+      <td><span class="status status-new">${p.layout}</span></td>
+      <td><span class="status ${p.status==='published'?'status-pub':'status-draft'}">${p.status}</span></td>
+      <td style="white-space:nowrap;">
+        <button class="toolbar-btn" onclick="renderNewPage(${i+1})">Edit</button>
+        <button class="toolbar-btn" onclick="toggleCustomPageStatus(${i})">${p.status==='published'?'Unpublish':'Publish'}</button>
+        <button class="toolbar-btn" style="color:var(--red);border-color:var(--red);" onclick="deleteCustomPage(${i})">Delete</button>
+      </td></tr>`).join('')}
+    </tbody></table>`:''}
     <h3 style="color:var(--white);margin:32px 0 16px;">SEO Settings</h3>
     <div style="max-width:600px;">
       <label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Meta Title</label>
@@ -735,6 +755,225 @@ function renderPages(){
       <textarea class="form-input" style="min-height:80px;margin-bottom:14px;">Elevating Cambodia's electronics manufacturing with quality consulting, VDA 6.3, Six Sigma, and IATF 16949.</textarea>
       <button class="btn btn-primary btn-sm" onclick="alert('SEO saved!')">Save SEO</button>
     </div>`;
+}
+
+function renderNewPage(editIndex){
+  const page=editIndex?customPages[editIndex-1]:null;
+  document.getElementById('adminPageTitle').textContent=page?'Edit Page: '+page.title:'Create New Page';
+  document.getElementById('adminContent').innerHTML=`
+    <div class="editor-area">
+      <div class="editor-row">
+        <div><label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Page Title</label>
+        <input class="form-input" id="pageTitle" value="${page?page.title:''}" placeholder="e.g. Case Studies, Pricing, Resources..."></div>
+        <div><label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Navigation Label</label>
+        <input class="form-input" id="pageNavLabel" value="${page?page.navLabel||page.title:''}" placeholder="Short label for navigation menu"></div>
+      </div>
+      <div class="editor-row">
+        <div><label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Page Layout</label>
+        <select class="form-input" id="pageLayout">
+          <option value="content" ${page&&page.layout==='content'?'selected':''}>📝 Content Page (text & images)</option>
+          <option value="cards" ${page&&page.layout==='cards'?'selected':''}>🃏 Card Grid (services, features, team)</option>
+          <option value="faq" ${page&&page.layout==='faq'?'selected':''}>❓ FAQ / Accordion</option>
+          <option value="gallery" ${page&&page.layout==='gallery'?'selected':''}>🖼️ Gallery / Portfolio</option>
+          <option value="pricing" ${page&&page.layout==='pricing'?'selected':''}>💰 Pricing Table</option>
+          <option value="timeline" ${page&&page.layout==='timeline'?'selected':''}>📅 Timeline / Milestones</option>
+          <option value="cta" ${page&&page.layout==='cta'?'selected':''}>🎯 CTA / Landing Section</option>
+        </select></div>
+        <div><label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Section Style</label>
+        <select class="form-input" id="pageStyle">
+          <option value="default" ${page&&page.style==='default'?'selected':''}>Default (dark background)</option>
+          <option value="alt" ${page&&page.style==='alt'?'selected':''}>Alternate (subtle teal tint)</option>
+        </select></div>
+      </div>
+      <label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Badge / Subtitle</label>
+      <input class="form-input" id="pageBadge" value="${page?page.badge||'':''}" placeholder="Small badge text above the heading (e.g. Our Work, FAQ)" style="margin-bottom:16px;">
+      <label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;">Heading Description</label>
+      <input class="form-input" id="pageDesc" value="${page?page.desc||'':''}" placeholder="Short description below the heading" style="margin-bottom:16px;">
+
+      <div id="layoutFields"></div>
+
+      <label style="font-size:13px;color:var(--text-dim);display:block;margin-bottom:6px;margin-top:16px;">Page Content / Items (JSON format)</label>
+      <p style="color:var(--text-dim);font-size:12px;margin-bottom:8px;">Enter your page items as JSON. See templates below for your selected layout.</p>
+      <textarea class="editor-field" id="pageContent" style="min-height:250px;font-family:monospace;font-size:13px;" placeholder="Loading template...">${page?JSON.stringify(page.items||[],null,2):''}</textarea>
+      <div id="templateHint" style="margin-top:8px;"></div>
+
+      <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="saveCustomPage(${editIndex||0},'published')">Publish Page</button>
+        <button class="btn btn-outline btn-sm" onclick="saveCustomPage(${editIndex||0},'draft')">Save Draft</button>
+        <button class="btn btn-outline btn-sm" onclick="previewCustomPage()">👁 Preview</button>
+      </div>
+      <div id="pageSaveMsg" style="display:none;color:var(--green);font-weight:600;margin-top:12px;"></div>
+    </div>`;
+
+  document.getElementById('pageLayout').addEventListener('change',updateTemplate);
+  updateTemplate();
+}
+
+function updateTemplate(){
+  const layout=document.getElementById('pageLayout').value;
+  const content=document.getElementById('pageContent');
+  const hint=document.getElementById('templateHint');
+
+  const templates={
+    content: {
+      hint:'Content page: array of sections with heading and text.',
+      data:[{heading:"Section Title",text:"Your content goes here. You can write multiple paragraphs separated by \\n\\n."}]
+    },
+    cards: {
+      hint:'Card grid: array of cards with icon, title, and description.',
+      data:[{icon:"🏆",title:"Card Title",desc:"Description of this item."},{icon:"📈",title:"Another Card",desc:"Description of another item."}]
+    },
+    faq: {
+      hint:'FAQ: array of questions and answers.',
+      data:[{q:"What services do you offer?",a:"We offer quality consulting, process improvement, supplier management, training, and audit services."},{q:"Do you work outside Cambodia?",a:"Yes, we serve clients across Southeast Asia."}]
+    },
+    gallery: {
+      hint:'Gallery: array of items with title and description (images can be added as URLs).',
+      data:[{title:"Project Name",desc:"Brief description of this project or case study.",image:""},{title:"Another Project",desc:"Brief description.",image:""}]
+    },
+    pricing: {
+      hint:'Pricing: array of plans with name, price, features list, and highlight flag.',
+      data:[{name:"Basic",price:"$500",period:"/project",features:["Gap Analysis","1 Day On-site","Report"],highlight:false},{name:"Professional",price:"$2,000",period:"/project",features:["Full Audit","3 Days On-site","Report","Follow-up"],highlight:true},{name:"Enterprise",price:"Custom",period:"",features:["Everything in Pro","Ongoing Support","Training","Dedicated Team"],highlight:false}]
+    },
+    timeline: {
+      hint:'Timeline: array of milestones with year, title, and description.',
+      data:[{year:"2020",title:"Founded",desc:"Technology for Cambodia established."},{year:"2023",title:"50+ Audits",desc:"Reached 50 supplier audits across SEA."},{year:"2026",title:"Expanding",desc:"Growing services to cover all of ASEAN."}]
+    },
+    cta: {
+      hint:'CTA section: object with heading, subtext, and button text/link.',
+      data:[{heading:"Ready to Transform Your Quality?",subtext:"Get a free consultation and discover how we can help your factory achieve world-class standards.",btnText:"Book Free Consultation",btnLink:"#contact"}]
+    }
+  };
+
+  const t=templates[layout];
+  hint.innerHTML=`<p style="color:var(--teal);font-size:12px;">💡 ${t.hint}</p>`;
+  if(!document.getElementById('pageContent').value.trim()){
+    content.value=JSON.stringify(t.data,null,2);
+  }
+}
+
+function saveCustomPage(editIndex,status){
+  const title=document.getElementById('pageTitle').value;
+  const navLabel=document.getElementById('pageNavLabel').value||title;
+  const layout=document.getElementById('pageLayout').value;
+  const style=document.getElementById('pageStyle').value;
+  const badge=document.getElementById('pageBadge').value;
+  const desc=document.getElementById('pageDesc').value;
+  let items=[];
+
+  if(!title){alert('Page title is required.');return;}
+
+  try{items=JSON.parse(document.getElementById('pageContent').value);}
+  catch(e){alert('Invalid JSON in content. Please check the format.');return;}
+
+  const pageData={
+    id:'custom-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-'),
+    title, navLabel, layout, style, badge, desc, items, status,
+    date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  };
+
+  if(editIndex){
+    customPages[editIndex-1]=pageData;
+  }else{
+    customPages.push(pageData);
+  }
+
+  localStorage.setItem('tfc_custom_pages',JSON.stringify(customPages));
+  renderPublicCustomPages();
+  updatePublicNav();
+
+  const msg=document.getElementById('pageSaveMsg');
+  msg.textContent=status==='published'?'✓ Page published! Check the website.':'✓ Draft saved!';
+  msg.style.display='block';
+  setTimeout(()=>msg.style.display='none',3000);
+}
+
+function toggleCustomPageStatus(i){
+  customPages[i].status=customPages[i].status==='published'?'draft':'published';
+  localStorage.setItem('tfc_custom_pages',JSON.stringify(customPages));
+  renderPublicCustomPages();updatePublicNav();renderPages();
+}
+
+function deleteCustomPage(i){
+  if(!confirm('Delete page "'+customPages[i].title+'"?'))return;
+  customPages.splice(i,1);
+  localStorage.setItem('tfc_custom_pages',JSON.stringify(customPages));
+  renderPublicCustomPages();updatePublicNav();renderPages();
+}
+
+function previewCustomPage(){
+  try{
+    const layout=document.getElementById('pageLayout').value;
+    const items=JSON.parse(document.getElementById('pageContent').value);
+    const title=document.getElementById('pageTitle').value||'Preview';
+    const badge=document.getElementById('pageBadge').value||'';
+    const desc=document.getElementById('pageDesc').value||'';
+    const html=buildPageHTML({title,badge,desc,layout,items,style:'default'});
+    const w=window.open('','_blank','width=800,height=600');
+    w.document.write(`<html><head><style>body{font-family:Inter,sans-serif;background:#0B1221;color:#E2E8F0;padding:40px;}</style></head><body>${html}</body></html>`);
+  }catch(e){alert('Fix JSON errors before previewing.');}
+}
+
+function buildPageHTML(page){
+  const accent='color:var(--teal,#00B4D8)';
+  let header=`<div style="margin-bottom:40px;">`;
+  if(page.badge)header+=`<div class="badge">${page.badge}</div>`;
+  header+=`<h2 style="font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--white,#F1F5F9);margin-bottom:12px;">${page.title}</h2>`;
+  if(page.desc)header+=`<p style="font-size:16px;color:var(--text-dim,#64748B);max-width:560px;line-height:1.6;">${page.desc}</p>`;
+  header+=`</div>`;
+
+  let body='';
+  const items=page.items||[];
+
+  switch(page.layout){
+    case 'content':
+      body=items.map(s=>`<div style="margin-bottom:32px;"><h3 style="font-size:20px;font-weight:700;color:var(--white,#F1F5F9);margin-bottom:12px;">${s.heading||''}</h3><p style="color:var(--text-muted,#94A3B8);line-height:1.8;font-size:16px;">${(s.text||'').replace(/\n\n/g,'</p><p style="color:var(--text-muted,#94A3B8);line-height:1.8;font-size:16px;margin-top:12px;">')}</p></div>`).join('');
+      break;
+    case 'cards':
+      body=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">${items.map(c=>`<div style="background:var(--bg2,#0F1B2D);border:1px solid rgba(0,180,216,0.12);border-radius:16px;padding:32px;border-top:3px solid var(--teal,#00B4D8);"><div style="font-size:32px;margin-bottom:16px;">${c.icon||'📌'}</div><h3 style="font-size:18px;font-weight:700;color:var(--white,#F1F5F9);margin-bottom:10px;">${c.title||''}</h3><p style="color:var(--text-muted,#94A3B8);font-size:14px;line-height:1.7;">${c.desc||''}</p></div>`).join('')}</div>`;
+      break;
+    case 'faq':
+      body=items.map((f,i)=>`<div style="background:var(--bg2,#0F1B2D);border:1px solid rgba(0,180,216,0.12);border-radius:12px;padding:24px;margin-bottom:12px;cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'"><h4 style="color:var(--white,#F1F5F9);font-size:16px;display:flex;justify-content:space-between;align-items:center;">${f.q||''} <span style="color:var(--teal,#00B4D8);">+</span></h4><div class="faq-a" style="display:none;margin-top:12px;color:var(--text-muted,#94A3B8);font-size:14px;line-height:1.7;">${f.a||''}</div></div>`).join('');
+      break;
+    case 'gallery':
+      body=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">${items.map(g=>`<div style="background:var(--bg2,#0F1B2D);border:1px solid rgba(0,180,216,0.12);border-radius:16px;overflow:hidden;">${g.image?`<div style="height:180px;background:#131f36;display:flex;align-items:center;justify-content:center;"><img src="${g.image}" style="max-width:100%;max-height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='🖼️'"></div>`:`<div style="height:180px;background:#131f36;display:flex;align-items:center;justify-content:center;font-size:48px;">🖼️</div>`}<div style="padding:20px;"><h3 style="font-size:16px;font-weight:700;color:var(--white,#F1F5F9);margin-bottom:8px;">${g.title||''}</h3><p style="color:var(--text-muted,#94A3B8);font-size:13px;">${g.desc||''}</p></div></div>`).join('')}</div>`;
+      break;
+    case 'pricing':
+      body=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;align-items:start;">${items.map(p=>`<div style="background:var(--bg2,#0F1B2D);border:${p.highlight?'2px solid var(--teal,#00B4D8)':'1px solid rgba(0,180,216,0.12)'};border-radius:16px;padding:32px;${p.highlight?'transform:scale(1.02);':''}"><h3 style="font-size:20px;font-weight:700;color:var(--white,#F1F5F9);margin-bottom:8px;">${p.name||''}</h3><div style="font-size:36px;font-weight:900;color:var(--teal,#00B4D8);margin-bottom:4px;">${p.price||''}<span style="font-size:14px;color:var(--text-dim,#64748B);font-weight:400;">${p.period||''}</span></div><ul style="list-style:none;padding:0;margin:20px 0;">${(p.features||[]).map(f=>`<li style="color:var(--text-muted,#94A3B8);font-size:14px;padding:8px 0;border-bottom:1px solid rgba(0,180,216,0.06);">✓ ${f}</li>`).join('')}</ul><a href="#contact" class="btn btn-${p.highlight?'primary':'outline'}" style="width:100%;justify-content:center;text-decoration:none;">Get Started</a></div>`).join('')}</div>`;
+      break;
+    case 'timeline':
+      body=`<div style="position:relative;padding-left:40px;">${items.map((t,i)=>`<div style="position:relative;margin-bottom:32px;padding-left:24px;border-left:2px solid rgba(0,180,216,0.2);"><div style="position:absolute;left:-9px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--teal,#00B4D8);border:3px solid var(--bg,#0B1221);"></div><div style="display:inline-block;padding:3px 10px;background:rgba(0,180,216,0.12);color:var(--teal,#00B4D8);border-radius:10px;font-size:12px;font-weight:600;margin-bottom:8px;">${t.year||''}</div><h3 style="font-size:18px;font-weight:700;color:var(--white,#F1F5F9);margin-bottom:6px;">${t.title||''}</h3><p style="color:var(--text-muted,#94A3B8);font-size:14px;line-height:1.6;">${t.desc||''}</p></div>`).join('')}</div>`;
+      break;
+    case 'cta':
+      const c=Array.isArray(items)?items[0]:items;
+      body=`<div style="text-align:center;padding:60px 20px;"><h2 style="font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--white,#F1F5F9);margin-bottom:16px;">${c.heading||''}</h2><p style="color:var(--text-muted,#94A3B8);font-size:18px;max-width:560px;margin:0 auto 32px;line-height:1.7;">${c.subtext||''}</p><a href="${c.btnLink||'#contact'}" class="btn btn-primary" style="text-decoration:none;">${c.btnText||'Get Started'}</a></div>`;
+      break;
+  }
+
+  return header+body;
+}
+
+function renderPublicCustomPages(){
+  const container=document.getElementById('customPagesContainer');
+  if(!container)return;
+  const published=customPages.filter(p=>p.status==='published');
+  container.innerHTML=published.map(page=>`
+    <section class="${page.style==='alt'?'section-alt':'section'}" id="${page.id}">
+      ${buildPageHTML(page)}
+    </section>`).join('');
+}
+
+function updatePublicNav(){
+  const published=customPages.filter(p=>p.status==='published');
+  const navLinks=document.querySelector('.nav-links');
+  const contactLink=navLinks.querySelector('a.cta-link');
+  navLinks.querySelectorAll('.custom-nav-link').forEach(a=>a.remove());
+  published.forEach(p=>{
+    const a=document.createElement('a');
+    a.href='#'+p.id;a.textContent=p.navLabel||p.title;
+    a.className='custom-nav-link';
+    navLinks.insertBefore(a,contactLink);
+  });
 }
 
 function renderDatabase(){
@@ -925,6 +1164,8 @@ function renderSettings(){
 
 // ===== INIT =====
 loadAllData();
+renderPublicCustomPages();
+updatePublicNav();
 </script>
 </body>
 </html>
